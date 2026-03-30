@@ -52,12 +52,14 @@ namespace DNWS
 
             HTTPResponse response = null;
             StringBuilder sb = new StringBuilder();
-            sb.Append("<html><body>");
-            sb.Append("Location : " + pm25reading.data.city.name + "<br />");
-            sb.Append("Date/Time : " + pm25reading.data.time.iso + "<br />");
-            sb.Append("PM25 : " + pm25reading.data.iaqi.pm25.v + "<br />");
-            sb.Append("PM10 : " + pm25reading.data.iaqi.pm10.v + "<br />");
-            sb.Append("</body></html>");
+            sb.Append("{\"status\":\"" + pm25reading.status + "\",");
+            sb.Append("\"data\":{");
+            sb.Append("\"city\":{\"name\":\"" + pm25reading.data.city.name + "\"},");
+            sb.Append("\"time\":{\"iso\":\"" + pm25reading.data.time.iso + "\"},");
+            sb.Append("\"iaqi\":{");
+            sb.Append("\"pm25\":{\"v\":" + pm25reading.data.iaqi.pm25.v + "},");
+            sb.Append("\"pm10\":{\"v\":" + pm25reading.data.iaqi.pm10.v + "}");
+            sb.Append("}}}");
             response = new HTTPResponse(200);
             response.body = Encoding.UTF8.GetBytes(sb.ToString());
             return response;
